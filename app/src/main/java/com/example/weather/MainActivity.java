@@ -50,7 +50,12 @@ public class MainActivity extends AppCompatActivity {
             }catch(Exception e){
                 e.printStackTrace();
 
-                Toast.makeText(getApplicationContext(), "Could not find weather:(",Toast.LENGTH_SHORT).show();
+                MainActivity.this.runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Toast.makeText(getApplicationContext(), "Could not find weather:(",Toast.LENGTH_SHORT).show();
+                    }
+                });
 
                 return null;
 
@@ -60,7 +65,7 @@ public class MainActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
-            Log.i("JSON",s);
+//            Log.i("JSON",s);
             try {
                 JSONObject jsonObject = new JSONObject(s);
                 String weatherInfo = jsonObject.getString("weather");
